@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/xQuotes/xq-observer.git"
+    "url": "git+ssh://git@github.com/xQuotes/xq-server.git"
   },
   "keywords": [
     "node.js",
@@ -20,9 +20,9 @@
   "author": "FuYin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xQuotes/xq-observer/issues"
+    "url": "https://github.com/xQuotes/xq-server/issues"
   },
-  "homepage": "https://github.com/xQuotes/xq-observer#readme",
+  "homepage": "https://github.com/xQuotes/xq-server#readme",
   "dependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-es2015-node5": "^1.2.0",
