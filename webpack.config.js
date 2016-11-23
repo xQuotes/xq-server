@@ -11,20 +11,20 @@ var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 var node_modules_dir = path.resolve(__dirname, 'node_modules')
 
-var appConfig = require('./app.js')
+var appConfig = require('./config/app.js')
 
 var _ = require('lodash')
 /* 
  * 用于分析模块的共用代码
  * https://github.com/webpack/docs/wiki/optimization#multi-page-app
  */
-var httpUrl = 'http://localhost:3332'
-var distDir = 'dist'//path.resolve(__dirname, 'dist')
+var httpUrl = 'http://localhost:3000'
+
+var distDir = path.resolve(__dirname, 'dist')
 shell.mkdir('-p', distDir)
 
 var isProduction = function () {
-  console.log(process.env.NODE_ENV)
-  console.log(process.env.DEVICE)
+  console.log(process.env.NODE_ENV || 'development')
   return process.env.NODE_ENV === 'production'
 }
 
@@ -66,7 +66,6 @@ var plugins = [
 // 添加其它入口文件
 
 _.map(appConfig.entries, (v, k) => {
-  console.log(path.resolve(__dirname, v.entry))
   entry[k] = [path.resolve(__dirname, v.entry)]
 
   plugins.push(
@@ -110,7 +109,7 @@ if( isProduction() ) {
   )
 }
 
-var public_path = isProduction() ? './' : './'
+var public_path = isProduction() ? '/' : '/'
 
 var config = {
   entry: entry,
