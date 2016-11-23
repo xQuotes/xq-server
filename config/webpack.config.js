@@ -13,14 +13,14 @@ var node_modules_dir = path.resolve(__dirname, 'node_modules')
 
 var appConfig = require('./app.js')
 
-var _map = require('lodash/fp/map')
+var _ = require('lodash')
 /* 
  * 用于分析模块的共用代码
  * https://github.com/webpack/docs/wiki/optimization#multi-page-app
  */
 var httpUrl = 'http://localhost:3332'
-
-shell.mkdir('-p', 'dist')
+var distDir = 'dist'//path.resolve(__dirname, 'dist')
+shell.mkdir('-p', distDir)
 
 var isProduction = function () {
   console.log(process.env.NODE_ENV)
@@ -64,14 +64,18 @@ var plugins = [
 ]
 
 // 添加其它入口文件
-_map(appConfig.entries, (v, k) => {
+
+_.map(appConfig.entries, (v, k) => {
+  console.log(path.resolve(__dirname, v.entry))
   entry[k] = [path.resolve(__dirname, v.entry)]
 
   plugins.push(
     new HtmlWebpackPlugin({
       filename: v.filename,
       title: v.title,
-      template: v.template
+      template: path.resolve(__dirname, v.template),
+      chunks: ['commons', 'vendors', k],
+      inject: 'body'
     })
   );
   
@@ -106,15 +110,14 @@ if( isProduction() ) {
   )
 }
 
-var public_path = isProduction() ? '/' : '/'
+var public_path = isProduction() ? './' : './'
 
 var config = {
   entry: entry,
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: distDir,
     publicPath: public_path, // 自动添加 css js 文件绝对路径 
-    filename: '[name].bundle.[hash].js',
-    chunkFileName: '[key].chunk.[hash].js'
+    filename: '[name].[hash].js'
   },
   module: {
     loaders: [
@@ -131,7 +134,6 @@ var config = {
             "transform-decorators-legacy",
             "transform-object-rest-spread",
             "lodash"
-            // "antd"
           ]
         },
         exclude: [node_modules_dir]
