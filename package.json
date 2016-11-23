@@ -1,6 +1,6 @@
 {
   "name": "xq-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Stater project for React.js By Node.js",
   "main": "src/server/index.js",
   "scripts": {
@@ -8,11 +8,6 @@
     "dev": "babel-node server.dev.js",
     "build": "export NODE_ENV=production && webpack --config webpack.config.js",
     "devlopment": "export NODE_ENV=devlopment && webpack-dev-server --config webpack.config.js --port 3000 --devtool eval --progress --colors --hot --content-base dist/"
-  },
-  "bin": {
-    "xq-server start": "babel-node ./server/index.js",
-    "xq-server build": "export NODE_ENV=production && webpack --config ./webpack.config.js",
-    "xq-server dev": "babel-node server.dev.js"
   },
   "repository": {
     "type": "git",
